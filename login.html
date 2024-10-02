@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Login</title>
+</head>
+<style>
+      .card {
+      background-color: #74AB6E;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 280px;
+      height: 340px;
+      text-align: center;
+      z-index: 1; 
+      margin-right: 42px;
+      margin: 50px auto;
+      
+    }
+    .text-p {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    color: #FFF;
+    font-family: 'Rowdies', sans-serif;
+    margin-top: 70px;
+  }
+  .text {
+    font-size: 15px;
+    color: #FFF;
+    font-family: 'Rowdies', sans-serif;
+    margin-top: 45px;
+  }
+  .username {
+    margin-bottom: 5px;
+    width: 250px;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid black;
+    outline: none;
+    font-size: 15px;
+    font-family: rowdies;
+    text-align: center;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .password {
+    margin: 10px 0 5px 0;
+    width: 250px;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid black;
+    outline: none;
+    font-size: 15px;
+    font-family: rowdies;
+    text-align: center;
+  }
+  .create {
+    margin: 10px 0 0 160px;
+    justify-content: flex-end;
+    font-size: 15px;
+    color: #076007;
+    font-family: 'Rowdies', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    
+    
+  }
+ 
+    .login-btn {
+      width: 100px; 
+      height: 40px; 
+      margin-top: 15px;
+      outline: none;
+      
+    }
+  
+    .login-btn button {
+      width: 280px;
+      height: 110%;
+      border-radius: 15px;
+      border: 1px solid black;
+      font-family: Rowdies;
+      font-size: 15px;
+      cursor: pointer;
+      color: #076007;
+     
+    }
+    .auth button {
+    width: 50px; 
+    height: 50px;
+    padding: 0; 
+    border: 1px solid black;
+    border-radius: 15px;
+    background: white; 
+    cursor: pointer; 
+    margin-top: 15px;
+  }
+
+  .auth button img {
+    width: 60%; 
+    height: 60%; 
+    object-fit: cover;
+  }
+</style>
+<body>
+  <div class="card">
+    <p class="text-p">GZEL</p>
+    <p class="text">Digital Design and Printing</p>
+    <div>
+      <input class="username" type="text" name="username" placeholder="Username">
+      <input class="password" type="password" name="password" placeholder="Password">
+    </div>
+    <a class="create" href="signup.html">Create account</a>
+    <div class="login-btn">
+      <button>Login</button>
+    </div>
+    
+    <div class="auth">
+      <button><img src="images/google.png" alt=""></button>
+      <button><img src="images/facebook.png" alt=""></button>
+      <button><img src="images/x.png" alt=""></button>
+    </div>
+  </div>
+</body>
+</html>
