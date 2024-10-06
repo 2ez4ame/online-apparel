@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <title>Online Clothing</title>
+  
+  <style>
+    /* Example header styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      color: black;
+      padding: 10px 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      position: relative; /* For positioning the dropdown */
+    }
+
+    .logo img {
+      height: 50px; 
+      margin-right: 10px;
+    }
+
+    .logo h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav .icon {
+      font-size: 25px; 
+      color: black; 
+      cursor: pointer; /* Change cursor to pointer */
+    }
+
+    .menu-icon {
+      font-size: 30px; /* Adjust the size of the menu icon */
+      margin-right: 10px; /* Add space from the header size */
+      cursor: pointer; /* Change cursor to pointer */
+    }
+
+    .divider {
+      border-left: 1px solid black;
+      height: 24px; /* Adjust the height to match the icon and text */
+      margin: 0 10px; /* Adjust the margin as needed */
+    }
+
+    .dropdown, .notification-dropdown {
+      position: absolute;
+      display: none; /* Hidden by default */
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown {
+      top: 40px; /* Position below the menu icon */
+      left: 0;
+      min-width: 160px;
+    }
+
+    .notification-dropdown {
+      top: 40px; /* Position below the notification icon */
+      right: 50;
+      min-width: 200px;
+    }
+
+    .dropdown a, .notification-dropdown .content p {
+      color: black;
+      padding: 2px 10px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown a:hover, .notification-dropdown .content p:hover {
+      background-color: #f1f1f1;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .editable-text {
+      cursor: pointer;
+    }
+
+    .editable-input {
+      display: none;
+    }
+
+    .notification-dropdown .title {
+      font-weight: bold;
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .notification-dropdown .content {
+      padding: 12px 16px;
+    }
+
+    .notification {
+      position: relative; /* Add this line */
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -15px; /* Adjust this value to move it higher or lower */
+      right: -10px; /* Adjust this value to move it left or right */
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <i class='bx bx-menu icon menu-icon' onclick="toggleDropdown('menuDropdown')"></i>
+      <div class="dropdown" id="menuDropdown">
+        <a href="#new">New design file</a>
+        <a href="#save">Save as new design</a>
+        <a href="#options">Options</a>
+      </div>
+      <div class="divider"></div>
+      <p class="suggested-text">Suggested design</p>
+      <div class="arrow-down">
+        <i class='bx bx-chevron-down icon'></i>
+      </div>
+      <div class="divider"></div>
+      <div class="redo-undo">
+        <i class='bx bx-undo icon'></i> 
+        <i class='bx bx-redo icon'></i> 
+      </div>
+      <div class="divider"></div>
+      <p class="suggested-text">Place an order</p>
+    </div>
+    <nav class="nav">
+      <div class="editable-container">
+        <p class="editable-text" onclick="editText()">Untitled design</p>
+        <input type="text" class="editable-input" onblur="saveText()" onkeydown="handleKey(event)">
+      </div>
+      <div class="divider"></div>
+      <div class="notification">
+        <i class='bx bx-bell icon' onclick="toggleNotificationDropdown()"></i>
+        <span class="notification-count" id="notificationCount">0</span>
+        <div class="notification-dropdown" id="notificationDropdown">
+          <div class="title">Notifications</div>
+          <div class="content" id="notificationContent">
+            <!-- Notifications will be added here -->
+          </div>
+        </div>
+      </div>
+      <div class="user-dropdown">
+        <i class='bx bx-user icon'></i>
+        <i class='bx bx-chevron-down icon'></i>
+      </div>
+      <div class="divider"></div>
+      <div class="user-dropdown">
+        <i class='bx bx-right-arrow' style="font-size: 20px;"></i>
+        <i class='bx bx-chevron-down icon'></i>
+      </div>
+      <div class="button-share">
+        <button>Share</button>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    let notificationCount = 0; // Track notification count
+
+    function toggleDropdown(id) {
+      document.getElementById(id).classList.toggle("show");
+    }
+
+    function toggleNotificationDropdown() {
+      const dropdown = document.getElementById('notificationDropdown');
+      dropdown.classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.menu-icon') && !event.target.closest('.dropdown') && !event.target.closest('.notification')) {
+        var dropdowns = document.getElementsByClassName("dropdown");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+        
+        // Close the notification dropdown if clicked outside
+        var notificationDropdown = document.getElementById('notificationDropdown');
+        if (notificationDropdown.classList.contains('show')) {
+          notificationDropdown.classList.remove('show');
+        }
+      }
+    }
+
+    function editText() {
+      const textElement = document.querySelector('.editable-text');
+      const inputElement = document.querySelector('.editable-input');
+      inputElement.value = textElement.textContent;
+      textElement.style.display = 'none';
+      inputElement.style.display = 'block';
+      inputElement.focus();
+    }
+
+    function saveText() {
+      const textElement = document.querySelector('.editable-text');
+      const inputElement = document.querySelector('.editable-input');
+      textElement.textContent = inputElement.value;
+      textElement.style.display = 'block';
+      inputElement.style.display = 'none';
+    }
+
+    function handleKey(event) {
+      if (event.key === 'Enter') {
+        saveText();
+      }
+    }
+
+    function addNotification(message) {
+      // Create a new notification element
+      const newNotification = document.createElement('p');
+      newNotification.textContent = message;
+
+      // Add the notification to the notification content
+      const notificationContent = document.getElementById('notificationContent');
+      notificationContent.appendChild(newNotification);
+
+      // Update the notification count
+      notificationCount++;
+      document.getElementById('notificationCount').textContent = notificationCount;
+    }
+
+    // Example usage of adding a notification
+    setTimeout(() => {
+      addNotification('Your order is shipped!');
+    }, 2000);
+    setTimeout(() => {
+      addNotification('Placed order');
+    }, 2000);
+  
+
+  </script>
+</body>
+</html>
